@@ -1,70 +1,52 @@
-// Initialize scores from localStorage or set defaults
-let scores = JSON.parse(localStorage.getItem('scores')) || {
-  wins: 0,
-  losses: 0,
-  ties: 0
-};
+function display(){
+  document.querySelector('.display').innerText = `Wins: ${scores.wins}, Losses: ${scores.losses}, Ties: ${scores.ties}`;
+}
 
-// Function to generate a random choice (1: Rock, 2: Paper, 3: Scissors)
+// Function to generate random choice for the machine
 function machine() {
-  return Math.floor(Math.random() * 3) + 1;
+  return Math.floor(Math.random() * 3) + 1; // Returns 1, 2, or 3
 }
 
-// Function to clear all scores and update localStorage
-function clearAll() {
-  scores.wins = 0;
-  scores.losses = 0;
-  scores.ties = 0;
+// Initialize scores from localStorage or use default values
+let scores = JSON.parse(localStorage.getItem('scores')) || { wins: 0, losses: 0, ties: 0 };
 
-  // Update localStorage
+// Save scores to localStorage
+function saveScores() {
   localStorage.setItem('scores', JSON.stringify(scores));
-
-  alert(`All Scores Cleared!!! \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
 }
+
+// Clear all scores and reset localStorage
+function clearAll() {
+  scores = { wins: 0, losses: 0, ties: 0 };
+  document.querySelector('.result').innerText = ``;
+  document.querySelector('.computer').innerText = ``;
+  localStorage.removeItem('scores');
+}
+
 
 // Main game logic
-function game(choice) {
+function play(choice) {
   const random = machine();
+  const outcomes = {
+    1: "✊", // Rock
+    2: "🖐", // Paper
+    3: "✌️", // Scissors
+  };
 
-  if (choice == 1) {
-    if (choice === random) {
-      scores.ties += 1;
-      alert(`Draw, Computer Choose : ✊ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else if (random === 3) {
-      scores.wins += 1;
-      alert(`You Won!!! Computer Choose : ✌️ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else {
-      scores.losses += 1;
-      alert(`You Lost!!! Computer Choose : 🖐 \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    }
+  if (choice === random) {
+    scores.ties += 1;
+    document.querySelector('.result').innerText = `Draw`;
+  } else if (
+    (choice === 1 && random === 3) || // Rock beats Scissors
+    (choice === 2 && random === 1) || // Paper beats Rock
+    (choice === 3 && random === 2)    // Scissors beats Paper
+  ) {
+    scores.wins += 1;
+    document.querySelector('.result').innerText = `You Won!!!`;
+  } else {
+    scores.losses += 1;
+    document.querySelector('.result').innerText = `You Lost!!!`;
   }
-
-  if (choice == 2) {
-    if (choice === random) {
-      scores.ties += 1;
-      alert(`Draw, Computer Choose : 🖐 \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else if (random === 1) {
-      scores.wins += 1;
-      alert(`You Won!!! Computer Choose : ✊ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else {
-      scores.losses += 1;
-      alert(`You Lost!!! Computer Choose : ✌️ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    }
-  }
-
-  if (choice == 3) {
-    if (choice === random) {
-      scores.ties += 1;
-      alert(`Draw, Computer Choose : ✌️ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else if (random === 2) {
-      scores.wins += 1;
-      alert(`You Won!!! Computer Choose : 🖐 \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    } else {
-      scores.losses += 1;
-      alert(`You Lost!!! Computer Choose : ✊ \nwins: ${scores.wins}  lost: ${scores.losses} tie: ${scores.ties}`);
-    }
-  }
-
-  // Update localStorage
-  localStorage.setItem('scores', JSON.stringify(scores));
+  document.querySelector('.computer').innerText = `Computer Chose: ${outcomes[random]}`;
+  saveScores(); // Update localStorage with the new scores
 }
