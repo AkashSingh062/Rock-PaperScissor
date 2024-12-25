@@ -7,14 +7,24 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container container-1">
-    <button class="btn btn-p btn1" onclick="game(1);"><h1>✊</h1></button>
-    <button class="btn btn-p btn2" onclick="game(2);"><h1>🖐</h1></button>
-    <button class="btn btn-p btn3" onclick="game(3);"><h1>✌️</h1></button>
+    <button class="btn btn-p btn1" onclick="play(1); display();"><h1>✊</h1></button>
+    <button class="btn btn-p btn2" onclick="play(2); display();"><h1>🖐</h1></button>
+    <button class="btn btn-p btn3" onclick="play(3); display();"><h1>✌️</h1></button>
   </div>
+
+  <div class="container-p container-3">
+    <p class="result"></p>
+    <p class="computer"></p>
+    <p class="cleared"></p>
+    <p class="display"></p>
+  </div>
+
   <div class="container container-2">
-    <button class="btn btn-c" onclick="clearAll();"><h1>CLEAR</h1></button>
+    <button class="btn btn-c" onclick="clearAll(); display();"><h1>CLEAR</h1></button>
   </div>
+
   <script src="main.js"></script>
 </body>
 </html>
