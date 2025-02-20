@@ -26,11 +26,6 @@ The **Rock-Paper-Scissor Game** is a simple web-based implementation of the clas
 - `style.css` - The CSS file that styles the game.
 - `main.js` - The JavaScript file that contains the game logic.
 
-## Future Improvements
-- Add animations for the game.
-- Improve the UI/UX design.
-- Add sound effects for each round.
-
 ## Author
 Developed by **Akash**.
 
